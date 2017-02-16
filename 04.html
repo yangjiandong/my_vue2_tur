@@ -1,0 +1,43 @@
+<!--https://cn.vuejs.org/v2/guide/computed.html-->
+<html>
+  <head>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <span v-once>This will never change: {{ message }}</span>
+
+   </div>
+
+    <script>
+
+var data = {message: 'xxxxx',
+  rawHtml: '<h2>ooo</h>',
+  my_url: 'http://www.google.com'
+};
+
+var app = new Vue({
+  el: '#app',
+  data: data,
+  created: function () {
+    console.log('on created, message is :' + this.message)
+  },
+  methods: {
+    doSomething: function(){
+      console.log('click...')
+    }
+  },
+  filters: {
+    capitalize: function ( value ){
+      if (!value) return ''
+
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+  }
+});
+
+    </script>
+  </body>
+</html>

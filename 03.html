@@ -1,0 +1,60 @@
+<!--https://cn.vuejs.org/v2/guide/syntax.html-->
+<html>
+  <head>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <span v-once>This will never change: {{ message }}</span>
+
+      <p></p>
+      <span>This is change by input:
+        {{ message | capitalize }}
+        <input v-model="message">
+
+      </span>
+
+      <p>HTML</p>
+
+      <span v-html="rawHtml"></span>
+
+      <p>缩写</p>
+      <a v-bind:href="my_url">my xx</a>
+      <a :href="my_url">my xx</a>
+
+      <p>on click</p>
+      <a @click="doSomething">do</a>
+    </div>
+
+    <script>
+
+var data = {message: 'xxxxx',
+  rawHtml: '<h2>ooo</h>',
+  my_url: 'http://www.google.com'
+};
+
+var app = new Vue({
+  el: '#app',
+  data: data,
+  created: function () {
+    console.log('on created, message is :' + this.message)
+  },
+  methods: {
+    doSomething: function(){
+      console.log('click...')
+    }
+  },
+  filters: {
+    capitalize: function ( value ){
+      if (!value) return ''
+
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
+  }
+});
+
+    </script>
+  </body>
+</html>

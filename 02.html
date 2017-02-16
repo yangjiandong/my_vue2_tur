@@ -1,0 +1,35 @@
+<!--https://cn.vuejs.org/v2/guide/instance.html-->
+<html>
+  <head>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      {{ message }}
+    </div>
+
+    <script>
+
+var data = {message: 'xxxxx'};
+
+var app = new Vue({
+  el: '#app',
+  data: data,
+  created: function () {
+    console.log('message is :' + this.message)
+  },
+  data1: {
+    message: 'Hello vue! for app-7',
+    groceryList: [
+    {text: 'Vegetables'},
+    {text: 'Cheese'},
+    {text: 'Whatever else humans are supposed to eat'},
+    {text: '匆忙'}
+    ]
+  }
+});
+
+    </script>
+  </body>
+</html>
