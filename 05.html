@@ -1,0 +1,49 @@
+<!--https://cn.vuejs.org/v2/guide/class-and-style.html-->
+<html>
+  <head>
+  <script src="./vue.js"></script>
+
+  <style>
+.active{
+  color: red;
+  font-size:200%;
+}
+  </style>
+  </head>
+
+  <body>
+    <h1>Class 与 Style 绑定</h1>
+
+    <div id="app">
+      <p></p>
+      <span>Original message: "{{ message }}"
+      </span>
+
+      <p>class</p>
+      <div v-bind:class='{ active: isActive }'>computer from vue...</div>
+
+      <p>style</p>
+      <div v-bind:style='styleObject'>style,computer from vue...</div>
+
+    </div>
+
+    <script>
+
+var data = {message: 'hello, from vue',
+  isActive: true,
+  styleObject: {
+    color: 'green',
+    fontSize: '33px'
+  }
+
+};
+
+var app = new Vue({
+  el: '#app',
+  data: data,
+});
+
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,76 @@
+<!--https://cn.vuejs.org/v2/guide/list.html-->
+<html>
+  <head>
+  <script src="./vue.js"></script>
+
+  <style>
+.active{
+  color: red;
+  font-size:200%;
+}
+  </style>
+  </head>
+
+  <body>
+    <h1>列表渲染</h1>
+
+    <div id="app">
+      <input
+         v-model="newTodoText"
+         v-on:keyup.enter="addNewTodo"
+         placeholder="Add a todo"
+         >
+
+      <ul>
+          <li
+          v-bind:style="styleObject"
+          is="todo-item"
+          v-for="(todo, index) in todos"
+          v-bind:title="todo"
+          v-on:remove="todos.splice(index,1)"
+          ></li>
+      </ul>
+
+    </div>
+
+    <script>
+
+var data = {
+  styleObject: {
+    color: 'green',
+    fontSize: '33px'
+  },
+  newTodoText: '',
+  todos: [
+    'Do the dishes',
+    'Take out the trash',
+    'Mow the low'
+  ]
+
+};
+
+Vue.component('todo-item', {
+  template: '\
+    <li>\
+    {{ title }}\
+  <button v-on:click="$emit(\'remove\')">X</button>\
+                      </li>\
+    ',
+  props: ['title']
+});
+
+var app = new Vue({
+  el: '#app',
+  data: data,
+  methods: {
+    addNewTodo: function () {
+      this.todos.push(this.newTodoText);
+      this.newTodoText = '';
+    }
+  }
+});
+
+    </script>
+  </body>
+</html>
+
