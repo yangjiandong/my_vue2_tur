@@ -1,0 +1,60 @@
+<!--https://cn.vuejs.org/v2/guide/forms.html-->
+<html>
+  <head>
+  <script src="./vue.js"></script>
+  </head>
+
+  <body>
+    <h1>表单控件绑定</h1>
+    <div id="app">
+
+     <input @keyup.alt.67="clear" v-model="message" placeholder="edit me">
+     <p>key alt+c clear</p>
+      <h2>Message is: {{ message }}</h>
+
+      <p></p>
+
+      <span>Multiline message is:</span>
+        <p style="white-space: pre">{{ message }}</p>
+        <br>
+      <textarea v-model="message" placeholder="add multiple lines"></textarea>
+
+      <p></p>
+
+      <select v-model="selected">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <span>Selected: {{ selected }}</span>
+
+    </div>
+
+    <script>
+
+var data = {
+  message: 'come from Vue.js',
+  styleObject: {
+    color: 'green',
+    fontSize: '33px'
+  },
+  selected: 'A'
+};
+
+var app = new Vue({
+  el: '#app',
+  data: data,
+  methods: {
+    greet: function (event) {
+      console.log(event.target.tagName);
+    },
+    clear: function () {
+      this.message = '';
+    }
+  }
+});
+
+    </script>
+  </body>
+</html>
+

@@ -18,11 +18,17 @@
       <button @click="counter +=1">counter 1</button>
       <p v-bind:style="styleObject">this button is clicked {{ counter }}。</p>
 
+      <button @click="greet">Greet</button>
+
+      <p>key alt+c clear</p>
+      <h2>{{ message }}</h>
+      <input @keyup.alt.67="clear" v-model="message">
     </div>
 
     <script>
 
 var data = {
+  message: 'come from Vue.js',
   styleObject: {
     color: 'green',
     fontSize: '33px'
@@ -41,6 +47,12 @@ var app = new Vue({
   el: '#app',
   data: data,
   methods: {
+    greet: function (event) {
+      console.log(event.target.tagName);
+    },
+    clear: function () {
+      this.message = '';
+    }
   }
 });
 
