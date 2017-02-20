@@ -2,42 +2,153 @@
 <html>
   <head>
   <script src="./vue.js"></script>
+  <script src="./currency-validator.js"></script>
   </head>
 
   <body>
     <h1>组件</h1>
     <div id="app">
-    <simple-counter></simple-counter>
-    <simple-counter></simple-counter>
-    <simple-counter></simple-counter>
-   </div>
+    <p> {{ totalClick }} </p>
+    <simple-counter v-on:increment="incrementTotal" message="o"></simple-counter>
+    <simple-counter v-on:increment="incrementTotal" message="o2"></simple-counter>
+    <simple-counter v-on:increment="incrementTotal" message="o3"></simple-counter>
+
+    <p>currency</p>
+
+    <currency-input label="Price" v-model="price"></currency-input>
+    <currency-input label="Shipping" v-model="shipping"></currency-input>
+
+    <currency-input label="Handling" v-model="handling"
+  ></currency-input>
+  <currency-input
+    label="Discount"
+    v-model="discount"
+  ></currency-input>
+
+  <p>Total: ${{ total }}</p>
+
+  <p>slot</p>
+  <app-layout>
+  <h1 slot="header">这里可能是一个页面标题</h1>
+  <p>主要内容的一个段落。</p>
+  <p>另一个主要段落。</p>
+  <p slot="footer">这里有一些联系信息</p>
+  </app-layout>
+
+  </div>
 
     <script>
 
+//slot
+Vue.component('app-layout', {
+  template: '<div class="container">\
+  <header>\
+    <slot name="header"></slot>\
+  </header>\
+  <main>\
+    <slot></slot>\
+  </main>\
+  <footer>\
+    <slot name="footer"></slot>\
+  </footer>\
+</div>',
+});
+
 Vue.component('simple-counter', {
-  template: '<button v-on:click="counter +=1">{{ counter }}</button>',
+  template: '<button v-on:click="increment">{{ counter }}</button>',
+  props: ['message'],
   data: function () {
     return {counter: 0};
+  },
+  methods: {
+    increment: function (){
+      this.counter +=1;
+      this.$emit('increment');
+    }
   }
-})
+});
+
+Vue.component('currency-input', {
+  template: '\
+    <div>\
+      <label v-if="label">{{ label }}</label>\
+      $\
+      <input\
+        ref="input"\
+        v-bind:value="value"\
+        v-on:input="updateValue($event.target.value)"\
+        v-on:focus="selectAll"\
+        v-on:blur="formatValue"\
+      >\
+    </div>\
+  ',
+  props: {
+    value: {
+      type: Number,
+      default: 0
+    },
+    label: {
+      type: String,
+      default: ''
+    }
+  },
+  mounted: function () {
+    this.formatValue()
+  },
+  methods: {
+    updateValue: function (value) {
+      var result = currencyValidator.parse(value, this.value)
+      if (result.warning) {
+        this.$refs.input.value = result.value
+      }
+      this.$emit('input', result.value)
+    },
+    formatValue: function () {
+      this.$refs.input.value = currencyValidator.format(this.value)
+    },
+    selectAll: function (event) {
+      // Workaround for Safari bug
+      // http://stackoverflow.com/questions/1269722/selecting-text-on-focus-using-jquery-not-working-in-safari-and-chrome
+      setTimeout(function () {
+        event.target.select()
+      }, 0)
+    }
+  }
+});
+
 var data = {
   message: 'come from Vue.js',
   styleObject: {
     color: 'green',
     fontSize: '33px'
   },
-  selected: 'A'
+  selected: 'A',
+  totalClick: 0,
+  //
+  price: 0,
+  shipping: 0,
+  handling: 0,
+  discount: 0
 };
 
 var app = new Vue({
   el: '#app',
   data: data,
+  computed: {
+    total: function () {
+      return (
+        (this.price * 100 + this.shipping * 100 + this.handling * 100 + this.discount * 100)/ 100).toFixed(2);
+    }
+  },
   methods: {
     greet: function (event) {
       console.log(event.target.tagName);
     },
     clear: function () {
       this.message = '';
+    },
+    incrementTotal: function () {
+      this.totalClick +=1;
     }
   }
 });
