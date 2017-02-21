@@ -7,7 +7,7 @@ Vue2.0 官方教程
 - 教程学习结束
 - vue-router
 
-  - [vue-router 60分钟快速入门](http://www.cnblogs.com/keepfool/p/5690366.html)
+  - [vue-router](http://router.vuejs.org/zh-cn/)
 
 2017.02.16
 ----
