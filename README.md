@@ -10,3 +10,11 @@ Vue2.0 官方教程
 
 <img src="props-events.png">
 
+sublime text3
+---
+
+## editorconfig
+
+## prettify
+
+html,css,js format code

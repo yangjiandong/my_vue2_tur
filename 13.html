@@ -1,0 +1,74 @@
+<!-- https://cn.vuejs.org/v2/guide/render-function.html -->
+<html>
+
+<head>
+  <script src="./vue.js"></script>
+</head>
+
+<body>
+  <h1>Render 函数</h1>
+  <div id="app">
+    <anchored-heading :level="1">Hello world!</anchored-heading>
+    <anchored-heading :level="3">Hello world! 3</anchored-heading>
+
+    <anchored-heading-nm :level="2">Hello world! 3</anchored-heading>
+
+  </div>
+  <script type="text/x-template" id="anchored-heading-template">
+    <div>
+      <h1 v-if="level === 1">
+      <slot></slot>
+    </h1>
+      <h2 v-if="level === 2">
+      <slot></slot>
+    </h2>
+      <h3 v-if="level === 3">
+      <slot></slot>
+    </h3>
+      <h4 v-if="level === 4">
+      <slot></slot>
+    </h4>
+      <h5 v-if="level === 5">
+      <slot></slot>
+    </h5>
+      <h6 v-if="level === 6">
+      <slot></slot>
+    </h6>
+    </div>
+  </script>
+  <script>
+  Vue.component('anchored-heading', {
+    template: '#anchored-heading-template',
+    props: {
+      level: {
+        type: Number,
+        required: true
+      }
+    }
+  });
+
+  // use render
+  Vue.component('anchored-heading-nm', {
+    render: function(createElement) {
+      return createElement(
+        'h' + this.level, // tag name 标签名称
+        this.$slots.default // 子组件中的阵列
+      )
+    },
+    props: {
+      level: {
+        type: Number,
+        required: true
+      }
+    }
+  });
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+
+    },
+  });
+  </script>
+</body>
+</html>
