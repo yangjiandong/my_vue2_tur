@@ -1,6 +1,17 @@
 Vue2.0 官方教程
 ====
 
+02.21
+----
+
+- 教程学习结束
+- vue-router
+
+  - [vue-router 60分钟快速入门](http://www.cnblogs.com/keepfool/p/5690366.html)
+
+2017.02.16
+----
+
 [Vue2.0 guide](https://cn.vuejs.org/v2/guide/)
 
 组件
@@ -15,4 +26,5 @@ sublime text3
 
 - editorconfig
 - prettify
+
   html,css,js format code
