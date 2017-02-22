@@ -86,3 +86,9 @@ sublime text3
 - prettify
 
   html,css,js format code(cmd+shift+h)
+
+Vue
+----
+
+Vue2, Vue-router, axios(Vue-resource), Vuex
+
