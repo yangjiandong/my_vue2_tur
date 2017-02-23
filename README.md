@@ -102,9 +102,16 @@ sublime text3
 - prettify
 
   html,css,js format code(cmd+shift+h)
+- scss,sass: Syntax Highlighting for Sass
+- Color Hightlighter, show color for hex or rgb
+- local history
+- key
+
+  Ctrl+Shift+M：选中花括号里面的全部内容不包括{}。
 
 Vue
 ----
 
 Vue2, Vue-router, axios(Vue-resource), Vuex
+
 
