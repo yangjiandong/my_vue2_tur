@@ -4,6 +4,22 @@ Vue2.0 官方教程
 02.22
 ----
 
+### vue axios如何全局添加自定义header
+
+```
+# main.js
+axios.interceptors.request.use(function (config) {    // 这里的config包含每次请求的内容
+    if (store.getters.getToken) {
+        config.headers.Authorization = `Token ${store.getters.getToken}`;
+    }
+    return config;
+}, function (err) {
+    return Promise.reject(err);
+});
+```
+
+或采用文档介绍的(https://www.awesomes.cn/repo/mzabriskie/axios), 新建实例
+
 ### google font local save
 
 firefox addon (https://addons.mozilla.org/en-US/firefox/addon/decentraleyes/)
