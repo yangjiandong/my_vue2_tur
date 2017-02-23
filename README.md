@@ -98,12 +98,16 @@ const router = new VueRouter({
 sublime text3
 ----
 
+- material-theme
+
+  - Type "install package" and press enter. Then search for "Material Theme"
+  - Preferences > Packages Settings and choose Material Theme > Activate Material Theme
 - editorconfig
 - prettify
 
   html,css,js format code(cmd+shift+h)
 - scss,sass: Syntax Highlighting for Sass
-- Color Hightlighter, show color for hex or rgb
+- Highlighter, show color for hex or rgb
 - local history
 - key
 
