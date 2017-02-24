@@ -1,118 +1,107 @@
 <!--https://cn.vuejs.org/v2/guide/computed.html-->
 <html>
-  <head>
+
+<head>
   <script src="./vue.js"></script>
   <script src="./axios.min.js"></script>
   <script src="./lodash.min.js"></script>
+</head>
 
-  </head>
+<body>
+  <h1>计算属性</h1>
 
-  <body>
-    <h1>计算属性</h1>
+  <div id="app">
 
-    <div id="app">
-      <span v-once>This will never change: {{ message }}</span>
+    <span v-once>This will never change: {{ message }}</span>
+    <p></p>
 
-      <p></p>
-      <span>Original message: "{{ message }}"
+    <span>Original message: "{{ message }}"
       </span>
-
-      <p></p>
-      <span>Input message: "{{ message }}", Capitalize:
+    <p></p>
+    <span>Input message: "{{ message }}", Capitalize:
         "{{ message | capitalize }}"
         <input v-model="message">
-
       </span>
+    <p></p>
 
-      <p></p>
-      <span>Computed reverse message: "{{ reversedMessage }}"
+    <span>Computed reverse message: "{{ reversedMessage }}"
       </span>
-
-      <p></p>
-      <span>method reverse message: "{{ runReversedMessage() }}"
+    <p></p>
+    <span>method reverse message: "{{ runReversedMessage() }}"
       </span>
-
-      <p></p>
-      <span>计算属性不会改变: "{{ now }}"
+    <p></p>
+    <span>计算属性不会改变: "{{ now }}"
       </span>
-
-      <p></p>
-      <span>fullName: "{{ fullName }}"
+    <p></p>
+    <span>fullName: "{{ fullName }}"
       </span>
-
-      <p>
+    <p>
       Ask a yes/no question:
       <input v-model="question">
-      </p>
-      <span>{{ answer }}
+    </p>
+    <span>{{ answer }}
       </span>
-
-    </div>
-
-    <script>
-
-var data = {message: 'hello, from vue',
-  firstName: 'Foo',
-  lastName: 'Bar',
-  question: '',
-  answer: 'I cannot give you an answer until you ask a question!'
-};
-
-var app = new Vue({
-  el: '#app',
-  data: data,
-  computed: {
-    reversedMessage: function(){
-      return this.message.split('').reverse().join('')
+  </div>
+  <script>
+  var data = {
+    message: 'hello, from vue',
+    firstName: 'Foo',
+    lastName: 'Bar',
+    question: '',
+    answer: 'I cannot give you an answer until you ask a question!'
+  };
+  var app = new Vue({
+    el: '#app',
+    data: data,
+    computed: {
+      reversedMessage: function() {
+        return this.message.split('').reverse().join('')
+      },
+      now: function() {
+        return Date.now()
+      },
+      fullName: function() {
+        return this.firstName + ' ' + this.lastName
+      }
     },
-    now: function () {
-      return Date.now()
+    methods: {
+      runReversedMessage: function() {
+        return this.message.split('').reverse().join('')
+      },
+      // _.debounce
+      getAnswer: _.debounce(
+        function() {
+          var vm = this;
+          if (this.question.indexOf('?') === -1) {
+            vm.answer = "Questions usually contain a question mark. ;-";
+            return;
+          }
+          vm.answer = 'Thinking...';
+          axios.get('https://yesno.wtf/api')
+            .then(function(response) {
+              vm.answer = _.capitalize(response.data.answer);
+            })
+            .catch(function(error) {
+              vm.answer = 'Error! Could not reach the API. ' + error;
+            })
+        }, 500
+      )
     },
-    fullName: function () {
-      return this.firstName + ' ' + this.lastName
-    }
-  },
-  methods: {
-    runReversedMessage: function(){
-      return this.message.split('').reverse().join('')
+    filters: {
+      capitalize: function(value) {
+        if (!value) return ''
+        value = value.toString();
+        return value.charAt(0).toUpperCase() + value.slice(1);
+      }
     },
-    // _.debounce
-    getAnswer: _.debounce (
-                   function(){
-                     var vm = this;
-                     if (this.question.indexOf('?') === -1){
-                       vm.answer = "Questions usually contain a question mark. ;-";
-                       return;
-                     }
-
-                     vm.answer = 'Thinking...';
-                     axios.get('https://yesno.wtf/api')
-                       .then(function (response){
-                         vm.answer = _.capitalize(response.data.answer);
-                       })
-                     .catch(function (error){
-                       vm.answer = 'Error! Could not reach the API. ' + error;
-                     })
-                   }, 500
-                   )
-  },
-  filters: {
-    capitalize: function ( value ){
-      if (!value) return ''
-
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
+    watch: {
+      question: function(newQuestion) {
+        this.answer = "Waiting for you to stop typing...";
+        this.getAnswer();
+      }
     }
-  },
-  watch: {
-    question: function (newQuestion) {
-      this.answer = "Waiting for you to stop typing...";
-      this.getAnswer();
-    }
-  }
-});
+  });
+  </script>
+</body>
 
-    </script>
-  </body>
 </html>
-

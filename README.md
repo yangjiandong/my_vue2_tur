@@ -1,6 +1,11 @@
 Vue2.0 官方教程
 ====
 
+02.23
+----
+
+### [vuex](https://vuex.vuejs.org/zh-cn/intro.html)
+
 02.22
 ----
 
