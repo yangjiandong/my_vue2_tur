@@ -9,6 +9,22 @@ Vue2.0 官方教程
 02.22
 ----
 
+### vue axios如何全局添加自定义header
+
+```
+# main.js
+axios.interceptors.request.use(function (config) {    // 这里的config包含每次请求的内容
+    if (store.getters.getToken) {
+        config.headers.Authorization = `Token ${store.getters.getToken}`;
+    }
+    return config;
+}, function (err) {
+    return Promise.reject(err);
+});
+```
+
+或采用文档介绍的(https://www.awesomes.cn/repo/mzabriskie/axios), 新建实例
+
 ### google font local save
 
 firefox addon (https://addons.mozilla.org/en-US/firefox/addon/decentraleyes/)
@@ -87,15 +103,24 @@ const router = new VueRouter({
 sublime text3
 ----
 
+- material-theme
+
+  - Type "install package" and press enter. Then search for "Material Theme"
+  - Preferences > Packages Settings and choose Material Theme > Activate Material Theme
 - editorconfig
 - prettify
 
   html,css,js format code(cmd+shift+h)
 - scss,sass: Syntax Highlighting for Sass
-- Color Hightlighter, show color for hex or rgb
+- Highlighter, show color for hex or rgb
 - local history
 - key
 
   Ctrl+Shift+M：选中花括号里面的全部内容不包括{}。
+
+Vue
+----
+
+Vue2, Vue-router, axios(Vue-resource), Vuex
 
 
